@@ -3,10 +3,96 @@
 }
 
 .active {
-  border-bottom: 2px solid black;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }
 
 main {
   margin: 35px;
+}
+
+.drawer {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
+}
+
+.drawer .closeButton {
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.drawer .drawerItems {
+  margin: 0 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.drawer .drawerItems span {
+  display: block;
+}
+
+.drawer .drawerItems ul {
+  list-style: none;
+  width: 80%;
+}
+
+.drawer .drawerItems ul li {
+  font-size: 22px;
+  margin: 20px 0;
+}
+
+.showDrawer {
+  left: 0;
+}
+
+.desktopDisplay {
+  display: none;
+}
+
+.mobileDisplay {
+  display: block;
+}
+
+@media only screen and (min-width: 600px) {
+  .desktopDisplay {
+    display: block;
+  }
+  .mobileDisplay {
+    display: none;
+  }
 }
 /*# sourceMappingURL=styles.css.map */
