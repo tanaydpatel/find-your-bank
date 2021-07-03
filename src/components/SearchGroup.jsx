@@ -10,11 +10,39 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import updateSearchParams from "../actionCreators/updateSearchParams";
+import "../css/searchParams.css";
 
 function SearchGroup() {
+  // load search params from store and make deep copy of it
+  const searchParams = JSON.parse(
+    JSON.stringify(useSelector((state) => state.searchParams))
+  );
+  // load dispatch to maipulate store
+  const dispatch = useDispatch();
+
+  // debounce method - to run filter function after delay
+  const debounce = (func, time) => {
+    let timer;
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(func, time);
+    };
+  };
+
+  // debounce generator function
+  const debouncedFunction = debounce(() => {
+    console.log("now");
+  }, 1000);
+
   return (
     <>
-      <Typography variant="h6" style={{ marginBottom: "30px" }}>
+      <Typography
+        variant="h6"
+        color="secondary"
+        style={{ marginBottom: "30px" }}
+      >
         Search Parameters
       </Typography>
       <Grid container spacing={5} style={{ marginBottom: "5px" }}>
@@ -28,13 +56,17 @@ function SearchGroup() {
               labelId="select-city-label"
               id="select-city"
               label="Select city"
-              value="mumbai"
+              value={searchParams.city}
+              onChange={(e) => {
+                searchParams.city = e.target.value;
+                dispatch(updateSearchParams(searchParams));
+              }}
             >
-              <MenuItem value={"mumbai"}>MUMBAI</MenuItem>
-              <MenuItem value={"delhi"}>DELHI</MenuItem>
-              <MenuItem value={"lucknow"}>LUCKNOW</MenuItem>
-              <MenuItem value={"banglore"}>BANGALORE</MenuItem>
-              <MenuItem value={"hyderabad"}>HYDERABAD</MenuItem>
+              <MenuItem value={"BANGLORE"}>BANGALORE</MenuItem>
+              <MenuItem value={"MUMBAI"}>MUMBAI</MenuItem>
+              <MenuItem value={"DELHI"}>DELHI</MenuItem>
+              <MenuItem value={"LUCKNOW"}>LUCKNOW</MenuItem>
+              <MenuItem value={"HYDERABAD"}>HYDERABAD</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -48,6 +80,11 @@ function SearchGroup() {
               labelId="select-category-label"
               id="select-category"
               label="Select category"
+              value={searchParams.category}
+              onChange={(e) => {
+                searchParams.category = e.target.value;
+                dispatch(updateSearchParams(searchParams));
+              }}
             >
               <MenuItem value="">
                 <em>Select category</em>
@@ -59,21 +96,32 @@ function SearchGroup() {
           </FormControl>
         </Grid>
         <Grid item lg={4} md={4} sm={6} xs={12}>
-          <TextField
-            className="tooltip"
-            disabled
-            fullWidth
-            label="Search"
-            id="outlined-start-adornment"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-            variant="outlined"
-          />
+          <div className="queryInput">
+            <div
+              className={
+                "tooltip-text" + (searchParams.category ? " hide" : "")
+              }
+            >
+              Please select category
+            </div>
+            <TextField
+              disabled={!searchParams.category}
+              fullWidth
+              onKeyUp={() => {
+                debouncedFunction();
+              }}
+              label="Search"
+              id="outlined-start-adornment"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+            />
+          </div>
         </Grid>
       </Grid>
     </>
