@@ -38,14 +38,10 @@ function SearchGroup() {
 
   return (
     <>
-      <Typography
-        variant="h6"
-        color="secondary"
-        style={{ marginBottom: "30px" }}
-      >
+      <Typography variant="h6" color="secondary" style={{ margin: "30px 0" }}>
         Search Parameters
       </Typography>
-      <Grid container spacing={5} style={{ marginBottom: "5px" }}>
+      <Grid container spacing={2} style={{ marginBottom: "5px" }}>
         <Grid item lg={3} md={4} sm={4} xs={12}>
           <FormControl
             variant="outlined"

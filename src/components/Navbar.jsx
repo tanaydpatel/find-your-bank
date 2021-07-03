@@ -23,6 +23,7 @@ function Navbar() {
   const [activeRoute, setActiveRoute] = useState(null);
   const [drawer, setdrawer] = useState(null);
   const location = useLocation();
+
   useEffect(() => {
     setActiveRoute(location.pathname);
     setdrawer(document.getElementById("drawer"));

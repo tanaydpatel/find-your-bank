@@ -14,7 +14,7 @@ main {
 
 .drawer {
   display: block;
-  width: 100vw;
+  width: 98vw;
   height: 100vh;
   background-color: white;
   z-index: 9;
