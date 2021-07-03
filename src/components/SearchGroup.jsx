@@ -13,28 +13,30 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import updateSearchParams from "../actionCreators/updateSearchParams";
 import "../css/searchParams.css";
+import store from "../store";
 
 function SearchGroup() {
   // load search params from store and make deep copy of it
-  const searchParams = JSON.parse(
-    JSON.stringify(useSelector((state) => state.searchParams))
-  );
+  const searchParams = useSelector((state) => state.searchParams);
   // load dispatch to maipulate store
   const dispatch = useDispatch();
 
   // debounce method - to run filter function after delay
   const debounce = (func, time) => {
     let timer;
-    return () => {
+    return (value) => {
       clearTimeout(timer);
-      timer = setTimeout(func, time);
+      timer = setTimeout(() => {
+        func(value);
+      }, time);
     };
   };
 
   // debounce generator function
-  const debouncedFunction = debounce(() => {
-    console.log("now");
-  }, 1000);
+  const debouncedFunction = debounce((value) => {
+    searchParams.query = value;
+    store.dispatch(updateSearchParams(searchParams));
+  }, 500);
 
   return (
     <>
@@ -55,6 +57,9 @@ function SearchGroup() {
               value={searchParams.city}
               onChange={(e) => {
                 searchParams.city = e.target.value;
+                searchParams.query = "";
+                searchParams.category = "";
+                document.getElementById("query").value = "";
                 dispatch(updateSearchParams(searchParams));
               }}
             >
@@ -79,6 +84,8 @@ function SearchGroup() {
               value={searchParams.category}
               onChange={(e) => {
                 searchParams.category = e.target.value;
+                searchParams.query = "";
+                document.getElementById("query").value = "";
                 dispatch(updateSearchParams(searchParams));
               }}
             >
@@ -101,13 +108,13 @@ function SearchGroup() {
               Please select category
             </div>
             <TextField
+              id="query"
               disabled={!searchParams.category}
               fullWidth
-              onKeyUp={() => {
-                debouncedFunction();
+              onKeyUp={(e) => {
+                debouncedFunction(e.target.value);
               }}
               label="Search"
-              id="outlined-start-adornment"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

@@ -1,22 +1,11 @@
-*::after,
-*::before {
+html,
+body {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: #00d09c #cecece;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  :root {
-    scroll-behavior: smooth;
-  }
-}
-
-html,
-body {
-  margin: 0px;
   color: #4b4b4b;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -29,10 +18,6 @@ body {
   body {
     font-size: 16px;
   }
-}
-
-nav {
-  border-top: 1.5rem solid black;
 }
 
 ::-webkit-scrollbar {
@@ -65,15 +50,6 @@ h6 {
   line-height: 1.15;
 }
 
-h1 + *,
-h2 + *,
-h3 + *,
-h4 + *,
-h5 + *,
-h6 + * {
-  margin-top: 0.5rem;
-}
-
 a {
   color: #141414;
   text-decoration: none;
@@ -82,10 +58,6 @@ a {
 strong {
   color: #222;
   font-weight: 600;
-}
-
-li {
-  margin-top: 0.25rem;
 }
 
 .underline {

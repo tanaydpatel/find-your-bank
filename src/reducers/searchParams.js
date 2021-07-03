@@ -4,7 +4,7 @@ export default function searchParams(
 ) {
   switch (action.type) {
     case "SET_SEARCH_PARAMS":
-      return action.payload;
+      return Object.assign({}, action.payload);
     default:
       return state;
   }
