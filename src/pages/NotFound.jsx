@@ -8,7 +8,7 @@ function NotFound() {
     setTimeout(() => {
       history.push("./all-banks");
     }, 2000);
-  }, []);
+  }, [history]);
 
   return (
     <div className="notFound">
