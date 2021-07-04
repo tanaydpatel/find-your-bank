@@ -41,7 +41,7 @@ function SearchGroup() {
 
   return (
     <>
-      <Typography variant="h6" color="secondary" style={{ margin: "30px 0" }}>
+      <Typography variant="h6" color="secondary" style={{ margin: "40px 0" }}>
         Search Parameters
       </Typography>
       <Grid container spacing={2} style={{ marginBottom: "5px" }}>
