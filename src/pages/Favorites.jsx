@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import BanksList from "../components/BanksList";
 import { Divider } from "@material-ui/core";
@@ -11,6 +11,18 @@ function Favorites() {
   // load favorites from store
   const favorites = useSelector((state) => state.favorites);
   const history = useHistory();
+
+  // used for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [banksPerPage] = useState(10);
+
+  // used for logic of pagination
+  let indexOfLastBank = currentPage * banksPerPage;
+  let indexOfFirstBank = indexOfLastBank - banksPerPage;
+  let currentBank = favorites.slice(indexOfFirstBank, indexOfLastBank);
+
+  // method to be utilized by pagination component to manipulate cuurent page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -29,8 +41,12 @@ function Favorites() {
       {/* give complete list of favoite banks as input to banklist component */}
       {favorites.length > 0 ? (
         <>
-          <BanksList bankList={favorites} />
-          <PaginationComponent />
+          <BanksList bankList={currentBank} />
+          <PaginationComponent
+            banksPerPage={banksPerPage}
+            totalBanks={favorites.length}
+            paginate={paginate}
+          />
         </>
       ) : (
         <p>No favorite banks</p>
