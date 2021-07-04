@@ -5,6 +5,7 @@ import { Divider } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
+import PaginationComponent from "../components/Pagination";
 
 function Favorites() {
   // load favorites from store
@@ -27,7 +28,10 @@ function Favorites() {
       </Button>
       {/* give complete list of favoite banks as input to banklist component */}
       {favorites.length > 0 ? (
-        <BanksList bankList={favorites} />
+        <>
+          <BanksList bankList={favorites} />
+          <PaginationComponent />
+        </>
       ) : (
         <p>No favorite banks</p>
       )}

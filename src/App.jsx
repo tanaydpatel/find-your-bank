@@ -13,6 +13,7 @@ import Favorites from "./pages/Favorites";
 import getBanksFromAPI from "./getBanks";
 import updateFavorites from "./actionCreators/updateFavorites";
 import "./css/styles.css";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const searchParams = useSelector((state) => state.searchParams);
@@ -41,13 +42,13 @@ function App() {
         <Navbar />
         <main>
           <Switch>
-            <Route path="/all-banks">
+            <Route exact path="/all-banks">
               <AllBanks />
             </Route>
-            <Route path="/bank-details/:id">
+            <Route exact path="/bank-details/:id">
               <BankDetails />
             </Route>
-            <Route path="/favorites">
+            <Route exact path="/favorites">
               <Favorites />
             </Route>
             <Route
@@ -57,6 +58,7 @@ function App() {
                 return <Redirect to="/all-banks" />;
               }}
             />
+            <Route component={NotFound} />
           </Switch>
         </main>
       </div>

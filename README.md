@@ -28,7 +28,7 @@
 
 ### Pagination
 
--Developed simple mathematics to keep track of `banks in a page`, `total banks`, `start/end index of current page`
+- Developed simple mathematics to keep track of `banks in a page`, `total banks`, `start/end index of current page`
 
 ### API cache
 
