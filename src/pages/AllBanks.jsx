@@ -3,25 +3,46 @@ import React, { useEffect, useState } from "react";
 import BanksList from "../components/BanksList";
 import SearchGroup from "../components/SearchGroup";
 import { Divider, Typography } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PaginationComponent from "../components/Pagination";
+import updateLoading from "../actionCreators/updateLoading";
 
 function AllBanks() {
   const banks = useSelector((state) => state.allBanks);
-  // const searchParams = useSelector((state) => state.searchParams);
+  const searchParams = useSelector((state) => state.searchParams);
   const [currentPage, setCurrentPage] = useState(1);
   const [banksPerPage, setbanksPerPage] = useState(10);
 
+  const dispatch = useDispatch();
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const [filteredList, setfilteredList] = useState([]);
+
+  useEffect(() => {
+    setfilteredList(banks);
+
+    if (searchParams.query != "") {
+      dispatch(updateLoading(true));
+      setfilteredList(
+        banks.filter((bank) => {
+          return bank[searchParams.category]
+            .toLowerCase()
+            .startsWith(searchParams.query.toLowerCase());
+        })
+      );
+      dispatch(updateLoading(false));
+    }
+  }, [banks, searchParams.category, searchParams.query]);
 
   let indexOfLastBank = currentPage * banksPerPage;
   let indexOfFirstBank = indexOfLastBank - banksPerPage;
-  let currentBank = banks.slice(indexOfFirstBank, indexOfLastBank);
+  let currentBank = filteredList.slice(indexOfFirstBank, indexOfLastBank);
 
   useEffect(() => {
     indexOfLastBank = currentPage * banksPerPage;
     indexOfFirstBank = indexOfLastBank - banksPerPage;
-    currentBank = banks.slice(indexOfFirstBank, indexOfLastBank);
+    currentBank = filteredList.slice(indexOfFirstBank, indexOfLastBank);
   }, [banksPerPage]);
 
   return (

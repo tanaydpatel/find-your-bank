@@ -19,10 +19,10 @@ import {
 } from "../actionCreators/updateFavorites";
 
 function BanksList({ bankList }) {
+  console.log("in bank list", bankList);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const favorites = useSelector((state) => state.favorites);
-  console.log("in bank", favorites);
   const dispatch = useDispatch();
   return (
     <>

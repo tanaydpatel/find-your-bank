@@ -94,7 +94,7 @@ function SearchGroup() {
               </MenuItem>
               <MenuItem value={"ifsc"}>IFSC</MenuItem>
               <MenuItem value={"branch"}>Branch</MenuItem>
-              <MenuItem value={"branch-name"}>Branch name</MenuItem>
+              <MenuItem value={"bank_name"}>Bank name</MenuItem>
             </Select>
           </FormControl>
         </Grid>
