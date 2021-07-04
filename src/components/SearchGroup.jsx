@@ -18,6 +18,7 @@ import store from "../store";
 function SearchGroup() {
   // load search params from store and make deep copy of it
   const searchParams = useSelector((state) => state.searchParams);
+  const loading = useSelector((state) => state.loading);
   // load dispatch to maipulate store
   const dispatch = useDispatch();
 
@@ -55,6 +56,7 @@ function SearchGroup() {
               id="select-city"
               label="Select city"
               value={searchParams.city}
+              disabled={loading}
               onChange={(e) => {
                 searchParams.city = e.target.value;
                 searchParams.query = "";
@@ -81,6 +83,7 @@ function SearchGroup() {
               labelId="select-category-label"
               id="select-category"
               label="Select category"
+              disabled={loading}
               value={searchParams.category}
               onChange={(e) => {
                 searchParams.category = e.target.value;

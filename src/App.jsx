@@ -32,7 +32,7 @@ function App() {
       console.log("fav", localfavorites);
       dispatch(updateFavorites(localfavorites));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>

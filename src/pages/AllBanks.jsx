@@ -6,6 +6,7 @@ import { Divider, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import PaginationComponent from "../components/Pagination";
 import updateLoading from "../actionCreators/updateLoading";
+import updateError from "../actionCreators/updateError";
 
 function AllBanks() {
   const banks = useSelector((state) => state.allBanks);
@@ -31,6 +32,9 @@ function AllBanks() {
             .startsWith(searchParams.query.toLowerCase());
         })
       );
+      if (filteredList.length === 0) {
+        dispatch(updateError({ msg: "Not found" }));
+      }
       dispatch(updateLoading(false));
     }
   }, [banks, searchParams.category, searchParams.query]);
@@ -48,12 +52,13 @@ function AllBanks() {
   return (
     <>
       <h1>All Banks</h1>
+      <Divider />
       <SearchGroup />
       <Divider />
       <Typography variant="h6" color="secondary" style={{ margin: "30px 0" }}>
         Banks list (
         <span style={{ color: "#09bd90", fontSize: "17px" }}>
-          {banks.length}
+          {filteredList.length}
         </span>
         )
       </Typography>
@@ -65,7 +70,7 @@ function AllBanks() {
         }}
       >
         <div>
-          Show{" "}
+          Rows per page:
           <select
             value={banksPerPage}
             onChange={(e) => {
@@ -83,14 +88,13 @@ function AllBanks() {
             <option value="150">150</option>
             <option value="200">200</option>
           </select>{" "}
-          rows{" "}
         </div>
       </div>
       <BanksList bankList={currentBank} />
 
       <PaginationComponent
         banksPerPage={banksPerPage}
-        totalBanks={banks.length}
+        totalBanks={filteredList.length}
         paginate={paginate}
       />
     </>

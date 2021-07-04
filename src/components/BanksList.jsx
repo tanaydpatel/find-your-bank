@@ -17,6 +17,7 @@ import {
   addFavorites,
   removeFavorites,
 } from "../actionCreators/updateFavorites";
+import { useHistory } from "react-router-dom";
 
 function BanksList({ bankList }) {
   console.log("in bank list", bankList);
@@ -24,6 +25,8 @@ function BanksList({ bankList }) {
   const error = useSelector((state) => state.error);
   const favorites = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   return (
     <>
       <TableContainer component={Paper} style={{ border: "1px solid #00d09c" }}>
@@ -55,7 +58,15 @@ function BanksList({ bankList }) {
               </TableRow>
             ) : bankList.length > 0 ? (
               bankList.map((bank) => (
-                <TableRow key={bank.ifsc}>
+                <TableRow
+                  key={bank.ifsc}
+                  className="tableRow"
+                  onClick={(e) => {
+                    if (e.target.className.includes("redirect")) {
+                      history.push("/bank-details/" + bank.ifsc);
+                    }
+                  }}
+                >
                   <TableCell>
                     <Checkbox
                       onChange={(e) => {
@@ -73,19 +84,22 @@ function BanksList({ bankList }) {
                       checkedIcon={<Star />}
                     />
                   </TableCell>
-                  <TableCell component="th" scope="row" width="200">
+
+                  <TableCell align="left" width="200" className="redirect">
                     {bank.bank_name}
                   </TableCell>
-                  <TableCell align="right" width="150">
+                  <TableCell align="right" width="150" className="redirect">
                     {bank.ifsc}
                   </TableCell>
-                  <TableCell align="right" width="350">
+                  <TableCell align="right" width="350" className="redirect">
                     {bank.branch}
                   </TableCell>
-                  <TableCell align="right" width="100">
+                  <TableCell align="right" width="100" className="redirect">
                     {bank.bank_id}
                   </TableCell>
-                  <TableCell align="right">{bank.address}</TableCell>
+                  <TableCell align="right" className="redirect">
+                    {bank.address}
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
@@ -100,7 +114,7 @@ function BanksList({ bankList }) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography variant="h6">ERROR encountered</Typography>
+                    <Typography variant="h6">ERROR</Typography>
                     <p>{error.msg}</p>
                   </div>
                 </TableCell>

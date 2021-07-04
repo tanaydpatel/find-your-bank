@@ -108,4 +108,13 @@ select {
   width: max-content;
   font-weight: 600;
 }
+
+.tableRow:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.paperData {
+  padding: 30px;
+}
 /*# sourceMappingURL=styles.css.map */
