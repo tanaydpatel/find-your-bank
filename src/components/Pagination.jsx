@@ -1,7 +1,9 @@
 import React from "react";
 import Pagination from "@material-ui/lab/Pagination";
+import PropTypes from "prop-types";
 
 function PaginationComponent({ banksPerPage, totalBanks, paginate }) {
+  // total number of pages
   const count = Math.ceil(totalBanks / banksPerPage);
 
   return (
@@ -23,5 +25,12 @@ function PaginationComponent({ banksPerPage, totalBanks, paginate }) {
     </div>
   );
 }
+
+// Prop validation
+PaginationComponent.propTypes = {
+  banksPerPage: PropTypes.number,
+  totalBanks: PropTypes.number,
+  paginate: PropTypes.func,
+};
 
 export default PaginationComponent;

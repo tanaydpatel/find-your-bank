@@ -7,6 +7,7 @@ import { ArrowBack } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 
 function Favorites() {
+  // load favorites from store
   const favorites = useSelector((state) => state.favorites);
   const history = useHistory();
 
@@ -24,6 +25,7 @@ function Favorites() {
       >
         Go back
       </Button>
+      {/* give complete list of favoite banks as input to banklist component */}
       {favorites.length > 0 ? (
         <BanksList bankList={favorites} />
       ) : (

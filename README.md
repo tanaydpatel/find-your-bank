@@ -29,3 +29,12 @@
 ### Pagination
 
 -Developed simple mathematics to keep track of `banks in a page`, `total banks`, `start/end index of current page`
+
+### API cache
+
+- Cached the API response in localStorage for 1 min.
+
+#### Other validation
+
+- Reset search text input when any dropdown is changed
+- To input in search box first select category

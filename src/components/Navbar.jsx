@@ -20,16 +20,19 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Navbar() {
+  // used to display the active link
   const [activeRoute, setActiveRoute] = useState(null);
   const [drawer, setdrawer] = useState(null);
   const location = useLocation();
+  const history = useHistory();
+  // for material UI component
+  const classes = useStyles();
 
   useEffect(() => {
     setActiveRoute(location.pathname);
     setdrawer(document.getElementById("drawer"));
   }, [location.pathname]);
-  const history = useHistory();
-  const classes = useStyles();
+
   return (
     <>
       <AppBar position="static">

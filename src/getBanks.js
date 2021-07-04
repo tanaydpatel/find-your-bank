@@ -5,11 +5,10 @@ import updateError from "./actionCreators/updateError";
 import store from "./store";
 
 const myStorage = window.localStorage;
+// initialize cache OR clear cache from previous session
+myStorage.setItem("cache", JSON.stringify({}));
 
-if (myStorage.getItem("cache") === null) {
-  myStorage.setItem("cache", JSON.stringify({}));
-}
-
+// clear cache if time has expired > 1 min
 function clearFromCache(key) {
   const cached = JSON.parse(myStorage.getItem("cache"));
   if (cached[key]["exp"] < Date.now()) {
@@ -18,11 +17,13 @@ function clearFromCache(key) {
   myStorage.setItem("cache", JSON.stringify(cached));
 }
 
+// return required key from cache
 function getFromCache(key) {
   const cached = JSON.parse(myStorage.getItem("cache"));
   return cached[key];
 }
 
+// set cache with expiry of 1 min and initalize timeout for its auto-deletion
 function setCache(key, data) {
   const cached = JSON.parse(myStorage.getItem("cache"));
   cached[key] = { exp: Date.now() + 60000, data };
@@ -33,6 +34,7 @@ function setCache(key, data) {
   }, 60000);
 }
 
+// method which uses API/cache
 function getBanksFromAPI() {
   store.dispatch(updateBanks([]));
 
@@ -46,6 +48,7 @@ function getBanksFromAPI() {
         { timeout: 15000 }
       )
       .then((res) => {
+        // update store and cache
         store.dispatch(updateBanks(res.data));
         store.dispatch(updateLoading(false));
         setCache(storeData.searchParams.city, res.data);
@@ -59,6 +62,7 @@ function getBanksFromAPI() {
         store.dispatch(updateLoading(false));
       });
   } else {
+    // update store and increase expiry of cached data
     const cachedData = getFromCache(storeData.searchParams.city);
     store.dispatch(updateBanks(cachedData.data));
     store.dispatch(updateLoading(false));

@@ -12,3 +12,5 @@ export default combineReducers({
   loading,
   error,
 });
+
+// the structure of redux store is defined in this file

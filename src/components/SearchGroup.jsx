@@ -1,3 +1,5 @@
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   FormControl,
   Grid,
@@ -9,16 +11,17 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import updateSearchParams from "../actionCreators/updateSearchParams";
-import "../css/searchParams.css";
 import store from "../store";
+import "../css/searchParams.css";
 
 function SearchGroup() {
   // load search params from store and make deep copy of it
   const searchParams = useSelector((state) => state.searchParams);
+
+  // loading status to disable dropdown menus
   const loading = useSelector((state) => state.loading);
+
   // load dispatch to maipulate store
   const dispatch = useDispatch();
 

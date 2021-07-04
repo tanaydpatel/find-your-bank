@@ -1,4 +1,7 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   TableContainer,
   Table,
@@ -11,16 +14,13 @@ import {
   TableBody,
   CircularProgress,
 } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
 import { Star, StarBorder } from "@material-ui/icons";
 import {
   addFavorites,
   removeFavorites,
 } from "../actionCreators/updateFavorites";
-import { useHistory } from "react-router-dom";
 
 function BanksList({ bankList }) {
-  console.log("in bank list", bankList);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const favorites = useSelector((state) => state.favorites);
@@ -126,5 +126,10 @@ function BanksList({ bankList }) {
     </>
   );
 }
+
+// Props validation
+BanksList.propTypes = {
+  bankList: PropTypes.array,
+};
 
 export default BanksList;

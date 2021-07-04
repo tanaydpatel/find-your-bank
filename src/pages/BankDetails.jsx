@@ -12,18 +12,28 @@ import {
 import { ArrowBack } from "@material-ui/icons";
 
 function BankDetails() {
+  // get ID of bank from the URL
   const { id } = useParams();
+
+  // banks currently in store
   const banks = useSelector((state) => state.allBanks);
+  // banks marked as favorites
   const favorites = useSelector((state) => state.favorites);
+  // bankdetails to be displayed
   const [bankDetails, setbankDetails] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
+    // first look in cuurent banks if the desired bank is present
     banks.map((bank) => {
       if (bank.ifsc === id) {
         setbankDetails(bank);
       }
     });
+
+    // if the bank is not present in current bank in store
+    // that means
+    // this is a favorite bank
     if (bankDetails === null) {
       favorites.map((bank) => {
         if (bank.ifsc === id) {
@@ -31,7 +41,7 @@ function BankDetails() {
         }
       });
     }
-  }, []);
+  }, [bankDetails, banks, favorites, id]);
 
   return (
     <>

@@ -9,17 +9,25 @@ import updateLoading from "../actionCreators/updateLoading";
 import updateError from "../actionCreators/updateError";
 
 function AllBanks() {
+  // load the banks from store into state
   const banks = useSelector((state) => state.allBanks);
+  // get search params from the store
   const searchParams = useSelector((state) => state.searchParams);
+
+  // used for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [banksPerPage, setbanksPerPage] = useState(10);
 
+  // to dispatch action in the redux store
   const dispatch = useDispatch();
 
+  // method to be utilized by pagination component to manipulate cuurent page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // actual list of banks which will be rendered in the table
   const [filteredList, setfilteredList] = useState([]);
 
+  // run effect to update the filteredList of banks whenever search query changes
   useEffect(() => {
     setfilteredList(banks);
 
@@ -32,17 +40,21 @@ function AllBanks() {
             .startsWith(searchParams.query.toLowerCase());
         })
       );
+
       if (filteredList.length === 0) {
         dispatch(updateError({ msg: "Not found" }));
       }
+
       dispatch(updateLoading(false));
     }
   }, [banks, searchParams.category, searchParams.query]);
 
+  // used for logic of pagination
   let indexOfLastBank = currentPage * banksPerPage;
   let indexOfFirstBank = indexOfLastBank - banksPerPage;
   let currentBank = filteredList.slice(indexOfFirstBank, indexOfLastBank);
 
+  // effect to change number of rows when user changes its value from select dropdown
   useEffect(() => {
     indexOfLastBank = currentPage * banksPerPage;
     indexOfFirstBank = indexOfLastBank - banksPerPage;

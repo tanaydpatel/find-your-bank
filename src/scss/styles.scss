@@ -2,6 +2,7 @@
   font-family: Raleway, sans-serif;
 }
 
+// for active link (used in navbar & drawer)
 .active {
   font-weight: 700;
   text-decoration: underline;
@@ -12,6 +13,7 @@ main {
   margin: 35px;
 }
 
+// only visible in mobile
 .drawer {
   display: block;
   width: 100vw;
@@ -72,6 +74,8 @@ main {
     display: none;
   }
 }
+
+// number of rows select menu
 select {
   color: #097258;
   font-size: 16px;
@@ -80,6 +84,7 @@ select {
   font-weight: 600;
 }
 
+// highlight the row
 .tableRow:hover {
   background-color: rgb(238, 238, 238);
   cursor: pointer;
