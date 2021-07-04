@@ -30,7 +30,11 @@ function AllBanks() {
       <SearchGroup />
       <Divider />
       <Typography variant="h6" color="secondary" style={{ margin: "30px 0" }}>
-        Banks list
+        Banks list (
+        <span style={{ color: "#09bd90", fontSize: "17px" }}>
+          {banks.length}
+        </span>
+        )
       </Typography>
       <div
         style={{
@@ -40,7 +44,7 @@ function AllBanks() {
         }}
       >
         <div>
-          Showing{" "}
+          Show{" "}
           <select
             value={banksPerPage}
             onChange={(e) => {
@@ -58,7 +62,7 @@ function AllBanks() {
             <option value="150">150</option>
             <option value="200">200</option>
           </select>{" "}
-          banks /page
+          rows{" "}
         </div>
       </div>
       <BanksList bankList={currentBank} />

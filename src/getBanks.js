@@ -1,6 +1,7 @@
 import axios from "axios";
 import updateBanks from "./actionCreators/updateBanks";
 import updateLoading from "./actionCreators/updateLoading";
+import updateError from "./actionCreators/updateError";
 import store from "./store";
 
 function getBanksFromAPI() {
@@ -12,13 +13,18 @@ function getBanksFromAPI() {
   const storeData = store.getState();
 
   axios
-    .get(url + storeData.searchParams.city)
+    .get(url + storeData.searchParams.city, { timeout: 15000 })
     .then((res) => {
       store.dispatch(updateBanks(res.data));
       store.dispatch(updateLoading(false));
     })
     .catch((data) => {
-      console.error(data);
+      const error = {
+        msg: data.message,
+        body: data,
+      };
+      store.dispatch(updateError(error));
+      store.dispatch(updateLoading(false));
     });
 }
 

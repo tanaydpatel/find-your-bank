@@ -7,15 +7,23 @@ import {
   Paper,
   TableCell,
   TableRow,
+  Typography,
   TableBody,
   CircularProgress,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Star, StarBorder } from "@material-ui/icons";
+import {
+  addFavorites,
+  removeFavorites,
+} from "../actionCreators/updateFavorites";
 
 function BanksList({ bankList }) {
   const loading = useSelector((state) => state.loading);
-
+  const error = useSelector((state) => state.error);
+  const favorites = useSelector((state) => state.favorites);
+  console.log("in bank", favorites);
+  const dispatch = useDispatch();
   return (
     <>
       <TableContainer component={Paper} style={{ border: "1px solid #00d09c" }}>
@@ -33,7 +41,7 @@ function BanksList({ bankList }) {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={5}>
+                <TableCell colSpan={6}>
                   <div
                     style={{
                       width: "100%",
@@ -45,14 +53,21 @@ function BanksList({ bankList }) {
                   </div>
                 </TableCell>
               </TableRow>
-            ) : (
+            ) : bankList.length > 0 ? (
               bankList.map((bank) => (
                 <TableRow key={bank.ifsc}>
                   <TableCell>
                     <Checkbox
-                      onChange={() => {
-                        alert(bank.ifsc);
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          dispatch(addFavorites(favorites, bank));
+                        } else {
+                          dispatch(removeFavorites(favorites, bank));
+                        }
                       }}
+                      checked={favorites.some(
+                        (item) => JSON.stringify(item) === JSON.stringify(bank)
+                      )}
                       color="primary"
                       icon={<StarBorder />}
                       checkedIcon={<Star />}
@@ -73,6 +88,23 @@ function BanksList({ bankList }) {
                   <TableCell align="right">{bank.address}</TableCell>
                 </TableRow>
               ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6}>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography variant="h6">ERROR encountered</Typography>
+                    <p>{error.msg}</p>
+                  </div>
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
