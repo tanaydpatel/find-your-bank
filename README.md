@@ -1,5 +1,7 @@
 # Find your bank
 
+## 🔗 [goto: find-your-bank.tanaypatel.dev](https://find-your-bank.tanaypatel.dev)
+
 ## 🧭 Routes
 
 - `/` redirects to `/all-banks`
